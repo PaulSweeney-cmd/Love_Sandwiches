@@ -20,10 +20,18 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 # Accessing the google spreadsheet
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
-# Accessing data in our worksheet
-sales = SHEET.worksheet('sales')
 
-# Using gspread method to get all values from the sales worksheet
-data = sales.get_all_values()
-print(data)
+def get_sales_data():
+    """
+    Get sales figures input from the user
+    """
+    print("Please enter your sales data from the last market")
+    print("Data should be six numbers, seperated by commas")
+    print("For example: 10,20,30,40,50,60\n")
+
+    data_str = input("Enter your data here: ")
+    print(f"The data provided is {data_str}")
+
+    
+get_sales_data()
 
