@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 # API list
 SCOPE = [
@@ -48,7 +49,7 @@ def get_sales_data():
 
 
 # Creating a function to validate the user data
-def validate_data(values):
+def validate_data(values): 
     """
     Inside the try statement, convert all string values to integers, 
     Raises ValueError if strings cannot be converted to integers,
@@ -79,8 +80,33 @@ def update_sales_worksheet(data):
     print("sales_worksheet updated successfully!\n")
 
 
+# Function to calculate the surplus data
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    The surplus is defined as the sales figure subtracted from the stock:
+        - Positive surplus indicates waste
+        - Negative surplus indicates extra made when stock sold out.
+    """
+    print("Calculating surplus data....\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
+    print(stock_row)
 
-data = get_sales_data()
-# Conveerting the values in to integers 
-sales_data = [int(num)for num in data]
-update_sales_worksheet(sales_data)
+
+
+
+
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num)for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+
+print("Welcome To Love Sandwiches Data Automation!\n")
+main()
